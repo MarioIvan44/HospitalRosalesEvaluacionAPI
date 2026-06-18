@@ -60,6 +60,8 @@ regiserPacientesController.register = async (req, res) => {
         address,
         phoneEmergencyContacts,
         isVerified,
+        profilePhoto: req.file.path,
+        public_id: req.file.filename,
         loginAttempts,
         timeOut,
       },
