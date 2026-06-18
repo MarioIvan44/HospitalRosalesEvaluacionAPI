@@ -18,7 +18,7 @@ especialidadesController.getAll = async (req, res) => {
         .status(404)
         .json({ message: "No se encontraron registros en la colección" });
     }
-    return res.status(200).json(equiposMedicos);
+    return res.status(200).json(especialidades);
   } catch (error) {
     console.error("error: " + error);
     return res.status(500).json({ message: "Internal Server error" });

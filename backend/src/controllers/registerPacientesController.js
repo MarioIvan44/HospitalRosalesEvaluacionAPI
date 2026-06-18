@@ -59,7 +59,7 @@ regiserPacientesController.register = async (req, res) => {
         phone,
         address,
         phoneEmergencyContacts,
-        isVerified,
+        isVerified: true,
         profilePhoto: req.file.path,
         public_id: req.file.filename,
         loginAttempts,
@@ -100,6 +100,8 @@ regiserPacientesController.register = async (req, res) => {
           .json({ message: "Paciente registrado, verifica tu email" });
       }
     });
+
+    return res.status(200).json({ message: "Enviado" });
   } catch (error) {
     console.log("error", +error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -108,55 +110,51 @@ regiserPacientesController.register = async (req, res) => {
 
 regiserPacientesController.verifyCode = async (req, res) => {
   try {
-    const {verificationCodeRequest} = req.body;
+    const { verificationCodeRequest } = req.body;
 
     const token = req.cookies.verificationToken;
 
-    console.log(token)
+    console.log(token);
 
-    const decoded = jsonwebtoken.verify(token, config.JWT.secret)
+    const decoded = jsonwebtoken.verify(token, config.JWT.secret);
     const {
-        name,
-        lastName,
-        email,
-        verificationCode: storedCode,
-        password: passwordHash,
-        phone,
-        address,
-        phoneEmergencyContacts,
-        isVerified,
-        loginAttempts,
-        timeOut,
-      } = decoded;
+      name,
+      lastName,
+      email,
+       isVerified,
+      verificationCode: storedCode,
+      password: passwordHash,
+      phone,
+      address,
+      profilePhoto,
+      public_id,
+      phoneEmergencyContacts,
+      loginAttempts,
+      timeOut,
+    } = decoded;
 
-      if(verificationCodeRequest !== storedCode){
-        return res.status(400).json({message: "Código inválido"})
-      }
+    if (verificationCodeRequest !== storedCode) {
+      return res.status(400).json({ message: "Código inválido" });
+    }
 
-      const newPaciente = new pacienteModel({
-        name,
-        lastName,
-        email,
-        password: passwordHash,
-        phone,
-        address,
-        phoneEmergencyContacts,
-        isVerified: true,
-        loginAttempts,
-        profilePhoto: req.file.path,
-        public_id: req.file.filename,
-        timeOut,
-      })
+    const newPaciente = new pacienteModel({name,
+      lastName,
+      email,
+       isVerified,
+      password: passwordHash,
+      phone,
+      address,
+      phoneEmergencyContacts,
+        profilePhoto,
+    public_id,
+      loginAttempts,
+      timeOut,});
 
-      await newPaciente.save();
+    await newPaciente.save();
 
-      const paciente = await pacienteModel.findOne({email})
-      paciente.isVerified = true
-      await paciente.save();
+    res.clearCookie("verificationToken");
 
-      res.clearCookie("verificationToken");
-
-      res.json({message: "Email verificado exitosamente"})
+    res.json({ message: "Email verificado exitosamente" });
   } catch (error) {
     console.log("error", +error);
     return res.status(500).json({ message: "Internal Server Error" });

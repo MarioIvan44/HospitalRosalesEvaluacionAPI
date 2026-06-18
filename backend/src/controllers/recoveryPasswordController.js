@@ -109,7 +109,7 @@ recoveryPasswordController.newPassword = async (req, res) => {
         return res.status(400).json({message: "Código de recuperación de contraseña no verificado"})
     }
 
-    const hashedPass = await bcrypt.hash(newPassword, 10);
+    const hashedPass = await bcrypt.hash(newPass, 10);
 
     await customerModel.findOneAndUpdate(
         {email: decoded.email},

@@ -52,7 +52,7 @@ const pacientesSchema = new Schema({
         type: Boolean
     },
     loginAttempts: {
-        type: Number
+        type: String
     },
     timeOut: {
         type: Date
