@@ -44,7 +44,7 @@ recoveryPasswordController.requestCode = async (req, res) => {
       from: config.email.user_email,
       to: email,
       subject: "Correo de recuperación de contra",
-      text: "Correo de recuperación de contra",
+      text: "Tu código de recuperación es: " + code,
     };
     await transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
