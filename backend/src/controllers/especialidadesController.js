@@ -18,7 +18,7 @@ especialidadesController.getAll = async (req, res) => {
         .status(404)
         .json({ message: "No se encontraron registros en la colección" });
     }
-    res.json(especialidades);
+    return res.status(200).json(equiposMedicos);
   } catch (error) {
     console.error("error: " + error);
     return res.status(500).json({ message: "Internal Server error" });
@@ -55,12 +55,12 @@ especialidadesController.put = async (req, res) => {
     );
 
     if (!updated) {
-      return res
-        .status(404)
-        .json({ message: "No se encontró el registro" });
+      return res.status(404).json({ message: "No se encontró el registro" });
     }
 
-    return res.status(200).json({message: "Registro actualizado correctamente"})
+    return res
+      .status(200)
+      .json({ message: "Registro actualizado correctamente" });
   } catch (error) {
     console.error("error: " + error);
     return res.status(500).json({ message: "Internal Server error" });
@@ -71,13 +71,13 @@ especialidadesController.put = async (req, res) => {
 especialidadesController.delete = async (req, res) => {
   try {
     const deleted = await especialidadesModel.findByIdAndDelete(req.params.id);
-    if(!deleted){
-        return res
-        .status(404)
-        .json({ message: "No se encontró el registro" });
+    if (!deleted) {
+      return res.status(404).json({ message: "No se encontró el registro" });
     }
 
-    return res.status(200).json({message: "Registro eliminado correctamente"})
+    return res
+      .status(200)
+      .json({ message: "Registro eliminado correctamente" });
   } catch (error) {
     console.error("error: " + error);
     return res.status(500).json({ message: "Internal Server error" });
