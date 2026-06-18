@@ -13,8 +13,7 @@
     timeOut
  *  */
 
-import { Schema } from "mongoose"
-import mongoose, {schema, model} from mongoose
+import mongoose, {schema, model} from "mongoose"
 
 const pacientesSchema = new Schema({
     name: {

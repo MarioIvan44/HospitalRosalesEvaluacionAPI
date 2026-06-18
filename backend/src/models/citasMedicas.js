@@ -1,0 +1,39 @@
+/**
+ * Campos 
+ * patient_id
+    specialty_id
+    appointmentDate
+    reason
+    status
+    observations
+ */
+
+import mongoose, {schema, model} from "mongoose"
+
+const citasMedicasSchema = new Schema({
+    patient_id: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "pacientes"
+    },
+    specialty_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "especialidades"
+    },
+    appointmentDate: {
+        type: Date
+    },
+    reason: {
+        type: String
+    },
+    status: {
+        type: String
+    },
+    observations: {
+        type: String
+    }
+}, {
+    timestamps: true,
+    strict: false
+})
+
+export default model ("citasMedicas", citasMedicasSchema)
