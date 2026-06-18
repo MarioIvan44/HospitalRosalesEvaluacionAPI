@@ -141,6 +141,8 @@ regiserPacientesController.verifyCode = async (req, res) => {
         phoneEmergencyContacts,
         isVerified: true,
         loginAttempts,
+        profilePhoto: req.file.path,
+        public_id: req.file.filename,
         timeOut,
       })
 
