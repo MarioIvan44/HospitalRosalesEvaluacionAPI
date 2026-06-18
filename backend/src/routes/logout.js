@@ -1,6 +1,5 @@
 import express from "express"
-import logoutController from "../controllers/logoutController.js"
-import loginController from "../controllers/loginController";
+import loginController from "../controllers/loginController.js";
 
 const router = express.router();
 

@@ -12,7 +12,7 @@
     isAvailable
  */
 
-import mongoose, {schema, model} from "mongoose"
+import mongoose, {Schema, model} from "mongoose"
 
 const equiposMedicosSchema = new Schema({
     equipmentName: {

@@ -8,7 +8,7 @@
  */
 
 
-import mongoose, {schema, model} from "mongoose"
+import mongoose, {Schema, model} from "mongoose"
 
 const expedientesClinicosSchema = new Schema({
     patient_id: { 

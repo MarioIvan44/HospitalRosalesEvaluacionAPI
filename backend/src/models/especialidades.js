@@ -5,7 +5,7 @@
     isAvailable
  *  */
 
-import mongoose, {schema, model} from "mongoose"
+import mongoose, {Schema, model} from "mongoose"
 
 const especialidadesSchema = new Schema({
     specialtyName: { 
