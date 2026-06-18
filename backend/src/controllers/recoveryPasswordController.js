@@ -84,11 +84,47 @@ recoveryPasswordController.verifyCode = async (req, res) => {
       { expiresIn: "15m" },
     );
 
-    res.cookie("recoveryCookie", newToken, {maxAge: 15*60*1000})
+    res.cookie("recoveryCookie", newToken, { maxAge: 15 * 60 * 1000 });
 
-    return res.status(200).json({message: "Puedes cambiar tu contraseña"})
+    return res.status(200).json({ message: "Puedes cambiar tu contraseña" });
   } catch (error) {
     console.log("error", +error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+//NEW PASSWORD
+recoveryPasswordController.newPassword = async (req, res) => {
+  try {
+    const {newPass, confirmPass} = req.body;
+
+    if(newPass !== confirmPass){
+        return res.status(400).json({message: "Contraseñas no coinciden"})
+    }
+
+    const token = req.cookies.recoveryCookie;
+    const decoded = jswonwebtoken.verify(token, config.JWT.secret)
+
+    if(!decoded.verified){
+        return res.status(400).json({message: "Código de recuperación de contraseña no verificado"})
+    }
+
+    const hashedPass = await bcrypt.hash(newPassword, 10);
+
+    await customerModel.findOneAndUpdate(
+        {email: decoded.email},
+        {password: hashedPass},
+        {new: true}
+    )
+
+    res.clearCookie("recoveryCookie");
+
+    return res.status(200).json({message: "Contraseña restablecida"})
+  } 
+  catch (error) {
+    console.log("error", +error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export default recoveryPasswordController;
