@@ -78,7 +78,7 @@ equiposMedicosController.create = async (req, res) => {
       status,
       isAvailable,
     });
-    await newEspecialidad.save();
+    await newEquipoMedico.save();
 
     return res.status(200).json({ message: "Registro creado correctamente" });
   } catch (error) {
@@ -151,7 +151,11 @@ equiposMedicosController.put = async (req, res) => {
 //DELETE
 equiposMedicosController.delete = async (req, res) => {
   try {
-    const deleted = await equiposMedicosModel.findByIdAndDelete(req.params.id);
+    const equiposMedico = await equiposMedicosModel.findById(req.params.id);
+
+    await cloudinary.uploader.destroy(equiposMedico.public_id);
+
+    const deleted = await equiposMedicosModel.findByIdAndDelete(req.params.id)
     if (!deleted) {
       return res.status(404).json({ message: "No se encontró el registro" });
     }
