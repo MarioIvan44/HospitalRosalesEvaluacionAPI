@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import especialidadesRoutes from "./src/routes/especialidades.js"
 import pacientesRoutes from "./src/routes/pacientes.js"
 import equiposMedicosRoutes from "./src/routes/equiposMedicos.js"
+import citasMedicasRoutes from "./src/routes/citasMedicas.js"
 
 const app = express();
 app.use(cors({origin: ["https://localhost:5173", "https://localhost:5174"], 
@@ -17,7 +18,8 @@ app.use(express.json())
 
 //Crear endpoints
 app.use("/api/especialidades", especialidadesRoutes)
-app.use("/api/equipos-medicos", equiposMedicosRoutes)
+app.use("/api/equiposMedicos", equiposMedicosRoutes)
 app.use("/api/pacientes", pacientesRoutes)
+app.use("/api/citasMedicas", citasMedicasRoutes)
 
 export default app

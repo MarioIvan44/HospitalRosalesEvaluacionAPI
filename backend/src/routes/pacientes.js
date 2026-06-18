@@ -8,7 +8,7 @@ router.route("/")
 .get(pacientesController.getAll)
 
 router.route("/:id")
-.put(pacientesController.put)
+.put(uploader.single("profilePhoto"), pacientesController.put)
 .delete(pacientesController.delete)
 .get(pacientesController.getById)
 

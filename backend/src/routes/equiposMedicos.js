@@ -9,7 +9,7 @@ router.route("/")
 .post(uploader.single("image"),equiposMedicosController.create)
 
 router.route("/:id")
-.put(equiposMedicosController.put)
+.put(uploader.single("image"),equiposMedicosController.put)
 .delete(equiposMedicosController.delete)
 .get(equiposMedicosController.getById)
 
